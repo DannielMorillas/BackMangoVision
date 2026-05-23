@@ -1,0 +1,55 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# --- Node / Frontend ---
+node_modules/
+dist/
+build/
+.vite/
+*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+coverage/
+
+# --- Entorno ---
+.env
+.env.*
+!.env.example
+
+# --- IDEs ---
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Docker ---
+docker-data/
+postgres-data/
+minio-data/
+
+# --- ML ---
+ml/models/*.pt
+ml/models/*.onnx
+ml/runs/
+data/raw/
+data/processed/
+*.weights
+
+# --- Logs ---
+*.log
+logs/
