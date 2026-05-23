@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #16A34A;
+  --color-primary-light: #22C55E;
+  --color-primary-50: #F0FDF4;
+  --color-primary-100: #DCFCE7;
+
+  --color-accent: #F59E0B;
+
+  --color-surface: #FAFAF9;
+  --color-surface-alt: #F5F5F4;
+
+  --color-text-primary: #1C1917;
+  --color-text-muted: #57534E;
+
+  --color-border: #E7E5E4;
+
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-display: "Outfit", "Inter", sans-serif;
+}
+
+html,
+body {
+  font-family: var(--font-sans);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.card-shadow {
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.04), 0 1px 2px -1px rgb(0 0 0 / 0.04);
+}
+
+.card-shadow-lg {
+  box-shadow: 0 10px 30px -10px rgb(0 0 0 / 0.1), 0 2px 6px -2px rgb(0 0 0 / 0.05);
+}
