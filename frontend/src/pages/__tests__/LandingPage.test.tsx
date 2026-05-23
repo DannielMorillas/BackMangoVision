@@ -1,8 +1,8 @@
-import { render, screen, waitFor } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { LandingPage } from "../LandingPage";
+import { renderWithProviders } from "../../test/render";
 
 const diseases = [
   {
@@ -30,27 +30,19 @@ beforeEach(() => {
       headers: { "Content-Type": "application/json" },
     }),
   ) as unknown as typeof fetch;
+  localStorage.clear();
 });
 
 afterEach(() => {
   global.fetch = originalFetch;
   vi.restoreAllMocks();
+  localStorage.clear();
 });
-
-function renderLanding() {
-  return render(
-    <MemoryRouter>
-      <LandingPage />
-    </MemoryRouter>,
-  );
-}
 
 describe("LandingPage (HU-001, HU-002, HU-003)", () => {
   it("HU-001 · muestra el nombre del sistema y el tagline", () => {
-    renderLanding();
-    expect(
-      screen.getAllByText(/MangoVision/i).length,
-    ).toBeGreaterThanOrEqual(1);
+    renderWithProviders(<LandingPage />);
+    expect(screen.getAllByText(/MangoVision/i).length).toBeGreaterThanOrEqual(1);
     expect(
       screen.getByRole("heading", {
         level: 1,
@@ -59,17 +51,18 @@ describe("LandingPage (HU-001, HU-002, HU-003)", () => {
     ).toBeInTheDocument();
   });
 
-  it("HU-001 · tiene una sección de beneficios con al menos 3 tarjetas", () => {
-    renderLanding();
-    const beneficios = screen.getByRole("heading", {
-      level: 2,
-      name: /Diagnóstico fitosanitario sistemático/i,
-    });
-    expect(beneficios).toBeInTheDocument();
+  it("HU-001 · tiene una sección de beneficios", () => {
+    renderWithProviders(<LandingPage />);
+    expect(
+      screen.getByRole("heading", {
+        level: 2,
+        name: /Diagnóstico fitosanitario sistemático/i,
+      }),
+    ).toBeInTheDocument();
   });
 
   it("HU-002 · renderiza el catálogo de enfermedades desde el backend", async () => {
-    renderLanding();
+    renderWithProviders(<LandingPage />);
     await waitFor(() => {
       const cards = screen.getAllByTestId("disease-card");
       expect(cards).toHaveLength(diseases.length);
@@ -78,28 +71,26 @@ describe("LandingPage (HU-001, HU-002, HU-003)", () => {
     expect(screen.getByText("Antracnosis")).toBeInTheDocument();
   });
 
-  it("HU-002 · muestra el mensaje de error si /api/diseases falla", async () => {
+  it("HU-002 · muestra mensaje de error si /api/diseases falla", async () => {
     global.fetch = vi.fn(async () =>
       new Response("error", { status: 500 }),
     ) as unknown as typeof fetch;
 
-    renderLanding();
+    renderWithProviders(<LandingPage />);
     await waitFor(() => {
       expect(screen.getByRole("alert")).toBeInTheDocument();
     });
   });
 
-  it("HU-003 · el botón principal de hero enlaza a /login (React Router)", () => {
-    renderLanding();
+  it("HU-003 · el botón principal de hero enlaza a /login", () => {
+    renderWithProviders(<LandingPage />);
     const cta = screen.getByTestId("cta-primary-login");
     expect(cta).toHaveAttribute("href", "/login");
   });
 
-  it("HU-003 · el botón de navbar también enlaza a /login", () => {
-    renderLanding();
+  it("HU-003 · el botón de navbar también enlaza a /login (sin sesión)", () => {
+    renderWithProviders(<LandingPage />);
     const navbarLinks = screen.getAllByRole("link", { name: /Iniciar sesión/i });
-    expect(
-      navbarLinks.some((link) => link.getAttribute("href") === "/login"),
-    ).toBe(true);
+    expect(navbarLinks.some((link) => link.getAttribute("href") === "/login")).toBe(true);
   });
 });

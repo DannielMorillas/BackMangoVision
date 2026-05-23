@@ -1,7 +1,12 @@
-import { Leaf, LogIn } from "lucide-react";
+import { LayoutDashboard, Leaf, LogIn } from "lucide-react";
 import { Link } from "react-router-dom";
 
+import { useAuth } from "../hooks/AuthContext";
+
 export function Navbar() {
+  const { status, user } = useAuth();
+  const isAuthenticated = status === "authenticated" && user;
+
   return (
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-border px-6 py-4">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -26,13 +31,23 @@ export function Navbar() {
           >
             Enfermedades
           </a>
-          <Link
-            to="/login"
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-white hover:bg-primary-light transition-colors font-medium text-sm shadow-sm"
-          >
-            <LogIn className="w-4 h-4" />
-            <span>Iniciar sesión</span>
-          </Link>
+          {isAuthenticated ? (
+            <Link
+              to="/dashboard"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-white hover:bg-primary-light transition-colors font-medium text-sm shadow-sm"
+            >
+              <LayoutDashboard className="w-4 h-4" />
+              <span>Dashboard</span>
+            </Link>
+          ) : (
+            <Link
+              to="/login"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-white hover:bg-primary-light transition-colors font-medium text-sm shadow-sm"
+            >
+              <LogIn className="w-4 h-4" />
+              <span>Iniciar sesión</span>
+            </Link>
+          )}
         </div>
       </div>
     </nav>
