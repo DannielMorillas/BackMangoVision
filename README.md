@@ -1,66 +1,78 @@
-# MangoVision
+# BackMangoVision — Backend del Sistema MangoVision
 
-Sistema de Reconocimiento de Enfermedades del Mango Kent mediante Deep Learning.
+Backend (API REST + capa de modelo IA) del sistema de reconocimiento de enfermedades del Mango Kent mediante Deep Learning.
 
-**Cliente:** ARA Export S.A.C. — Casma / Trujillo, Perú
-**Universidad:** Universidad Privada Antenor Orrego — Facultad de Ingeniería
+- **Frontend (UI React):** https://github.com/DannielMorillas/FrontMangoVision
+- **Cliente:** ARA Export S.A.C. — Casma / Trujillo, Perú
+- **Universidad:** Universidad Privada Antenor Orrego — Facultad de Ingeniería
 
 ---
 
 ## Estructura del repositorio
 
 ```
-MangoVision/
+BackMangoVision/
 ├── backend/        FastAPI + SQLAlchemy + Alembic (API REST + inferencia)
-├── frontend/       React + Vite + Ant Design (UI)
 ├── ml/             Notebooks de entrenamiento YOLOv8 / U-Net y artefactos del modelo
-├── db/             Scripts SQL de seed y catálogo de enfermedades
+├── db/             Scripts SQL de seed (catálogo de enfermedades)
 ├── docs/           Documentación viva del proyecto, sprints y evidencias
-└── docker-compose.yml
+└── docker-compose.yml  (Postgres + MinIO)
 ```
 
 ## Stack técnico
 
 | Capa | Tecnología | Versión objetivo |
 |---|---|---|
-| Frontend | React + Vite + TypeScript + Ant Design | React 19, Vite 8 |
-| Backend | FastAPI + SQLAlchemy + Alembic | Python 3.11+ (3.12 OK) |
+| API | FastAPI + SQLAlchemy + Alembic | Python 3.11+ (3.12 OK) |
 | BD | PostgreSQL | 16 |
 | Storage de imágenes | MinIO (compatible S3) | RELEASE.2025 |
 | Modelos IA | YOLOv8 (detección) + U-Net (severidad) | Ultralytics 8.x |
-| Auth | JWT (HS256, 8h) + bcrypt | python-jose, passlib |
-| Tests | Pytest (backend), Vitest (frontend) | cobertura ≥ 70% |
+| Auth | JWT (HS256, 8h) + bcrypt | python-jose, bcrypt |
+| Tests | Pytest | cobertura ≥ 70% |
 
-## Cómo levantar el entorno (desarrollo)
+## Cómo levantar el backend
 
-```bash
-# 1. Copiar variables de entorno
-cp .env.example .env
+```powershell
+# 1. Variables de entorno
+copy .env.example .env
 
-# 2. Levantar Postgres + MinIO
-docker compose up -d postgres minio
+# 2. Postgres + MinIO
+docker compose up -d
 
 # 3. Backend
 cd backend
 python -m venv .venv
-.\.venv\Scripts\Activate.ps1     # Windows PowerShell
+.\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 alembic upgrade head
-uvicorn app.main:app --reload --port 8000
 
-# 4. Frontend
-cd ../frontend
-npm install
-npm run dev
+# 4. Seed catálogo + admin inicial (una vez)
+docker cp ..\db\seeds\diseases.sql mangovision-postgres:/tmp/diseases.sql
+docker exec mangovision-postgres psql -U mangovision -d mangovision -f /tmp/diseases.sql
+python scripts/seed_initial_admin.py
+
+# 5. Levantar API
+uvicorn app.main:app --reload --port 8000
 ```
 
-## Documentación SCRUM
+## Documentación SCRUM y evidencias
 
-La gestión del proyecto (sprints, historias, métricas) está en `../Scrum/`.
-Las evidencias de cada HU/EN cerrado están en `docs/sprints/sprint-N/evidencias/`.
+| Documento | Ruta |
+|---|---|
+| Roadmap, sprints y backlog | (carpeta paralela `Scrum/` del proyecto académico) |
+| Evidencias del Sprint 1 | [docs/sprints/sprint-1/](docs/sprints/sprint-1/) |
+| Incidencias resueltas | [docs/sprints/sprint-1/incidencias.md](docs/sprints/sprint-1/incidencias.md) |
 
 ## Ramas
 
-- `main` — código estable, releases.
-- `develop` — integración continua del sprint en curso.
-- Feature branches: `feature/HU-XXX-titulo-corto`.
+- `main` — código estable. Cada PBI cerrado se mergea aquí con su evidencia.
+- `develop` — integración del sprint en curso.
+
+## Equipo
+
+| Miembro | Rol Scrum |
+|---|---|
+| Walter Cueva Chávez | Portfolio Manager / Asesor |
+| Patrick Isla | Product Owner / Investigador Principal / Dev |
+| Daniel Fabian Morillas Chamache | Project Manager |
+| Johan Jhosep Juares Olano | Scrum Master |
