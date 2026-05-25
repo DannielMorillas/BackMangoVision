@@ -1,0 +1,19 @@
+# Template del dataset.yaml para YOLOv8 (EN-004)
+# ATENCION: este archivo es solo un template versionado de referencia.
+# El dataset.yaml real lo genera scripts/split_dataset.py automaticamente con paths absolutos.
+
+# Path absoluto a la carpeta processed (reemplazar por la ruta real del entorno)
+path: c:/Users/Patrick Isla/Desktop/notion/BackMangoVision/data/processed
+
+train: train/images
+val: val/images
+test: test/images
+
+# Numero y nombres de clases (orden = ID YOLO)
+nc: 5
+names:
+  0: sano
+  1: antracnosis
+  2: oidio
+  3: pudricion_peduncular
+  4: otras_lesiones
