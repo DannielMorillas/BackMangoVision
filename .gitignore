@@ -38,10 +38,27 @@ ml/models/*.onnx
 ml/runs/
 *.weights
 
-# --- Datasets (pesados, no se versionan) ---
-data/raw/
+# --- Datasets ---
+# Excluimos imagenes y labels (pesados) pero permitimos los .md de documentacion
+# y los archivos de configuracion (data.yaml, metadata.csv).
+data/raw/**/images/
+data/raw/**/labels/
+data/raw/**/*.jpg
+data/raw/**/*.jpeg
+data/raw/**/*.png
+data/raw/**/*.bmp
+data/raw/**/*.zip
+data/raw/**/*.tar
+data/raw/**/*.tgz
+data/raw/aragroexport/metadata.csv
+
+# Splits intermedios y finales (pesados)
 data/interim/
-data/processed/
+data/processed/**/images/
+data/processed/**/labels/
+data/processed/**/*.jpg
+data/processed/**/*.jpeg
+data/processed/**/*.png
 
 # --- Logs y artefactos locales ---
 *.log
