@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 2
+names: ['ripe', 'un_ripe']
+
+roboflow:
+  workspace: daniel-morillas
+  project: mango-0igyk-xk6in
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/daniel-morillas/mango-0igyk-xk6in/dataset/1
