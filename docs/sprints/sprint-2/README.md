@@ -11,13 +11,21 @@
 
 | ID | Título | SP | Estado | Evidencia |
 |---|---|---|---|---|
-| EN-001 | Importar Dataset Público de Mango (ya existente, formato YOLO) | 5 | ⏳ | — |
-| EN-002 | Instalar y Configurar CVAT | 3 | ⏳ | — |
-| DO-001 | Documentar Protocolo de Captura de Campo | 3 | ⏳ | — |
-| HU-009 | Realizar Sesiones de Captura en Casma | 8 | ⏳ | — |
-| HU-010 | Anotar Imágenes con Bounding Boxes (CVAT → YOLO) | 13 | ⏳ | — |
-| EN-003 | Dividir Dataset en Train / Val / Test (70/15/15) | 5 | ⏳ | — |
-| EN-004 | Crear y Validar dataset.yaml para YOLOv8 | 2 | ⏳ | — |
+| EN-001 | Importar Dataset Público de Mango | 5 | 🟡 | [EN-001.md](evidencias/EN-001.md) — Opción E confirmada |
+| EN-002 | Instalar y Configurar CVAT | 3 | 🟡 | [EN-002.md](evidencias/EN-002.md) — docs listos, falta ejecución |
+| DO-001 | Documentar Protocolo de Captura de Campo | 3 | ✅ | [DO-001.md](evidencias/DO-001.md) |
+| HU-009 | Realizar Sesiones de Captura en Casma | 8 | 🟡 | sesiones marzo–abril 2026 ejecutadas, falta copiar fotos |
+| HU-010 | Anotar Imágenes con Bounding Boxes (CVAT → YOLO) | 13 | ⏳ | bloqueada por HU-009 y EN-002 |
+| EN-003 | Dividir Dataset en Train / Val / Test (70/15/15) | 5 | 🟡 | [EN-003.md](evidencias/EN-003.md) — script listo |
+| EN-004 | Crear y Validar dataset.yaml para YOLOv8 | 2 | 🟡 | [EN-004.md](evidencias/EN-004.md) — autogen ligada a EN-003 |
+
+**Avance:** 1 ✅ + 5 🟡 + 1 ⏳ · scripts y docs completos · ejecución final espera fotos de Casma + anotación en CVAT.
+
+### Apoyo adicional creado
+
+- [`scripts/verify_yolo_dataset.py`](../../../scripts/verify_yolo_dataset.py) — validador de integridad YOLO (Bootstrap).
+- [`scripts/select_for_annotation.py`](../../../scripts/select_for_annotation.py) — selecciona 120 imágenes balanceadas para anotar en CVAT (HU-010).
+- [`scripts/split_dataset.py`](../../../scripts/split_dataset.py) — split estratificado + genera `dataset.yaml`.
 
 ## Plan de ejecución
 
