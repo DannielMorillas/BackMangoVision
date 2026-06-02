@@ -73,6 +73,5 @@ uvicorn app.main:app --reload --port 8000
 | Miembro | Rol Scrum |
 |---|---|
 | Walter Cueva Chávez | Portfolio Manager / Asesor |
-| Patrick Isla | Product Owner / Investigador Principal / Dev |
 | Daniel Fabian Morillas Chamache | Project Manager |
 | Johan Jhosep Juares Olano | Scrum Master |
