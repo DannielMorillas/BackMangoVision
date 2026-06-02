@@ -31,6 +31,15 @@ class Settings(BaseSettings):
     minio_bucket: str = Field(default="images", alias="MINIO_BUCKET")
     minio_secure: bool = Field(default=False, alias="MINIO_SECURE")
 
+    # Storage: "local" (disco, default dev) o "minio" (produccion S3).
+    storage_backend: str = Field(default="local", alias="STORAGE_BACKEND")
+    upload_dir: str = Field(default=str(REPO_ROOT / "backend" / "uploads"), alias="UPLOAD_DIR")
+
+    # Modelo IA: ruta al .pt YOLOv8. Si no existe, el servicio corre en modo stub.
+    model_path: str = Field(default=str(REPO_ROOT / "ml" / "models" / "custom-v1.pt"), alias="MODEL_PATH")
+    # Umbral de aptitud: % de area afectada por encima del cual el fruto es "no apto".
+    aptitude_area_threshold: float = Field(default=15.0, alias="APTITUDE_AREA_THRESHOLD")
+
     # App
     app_env: str = Field(default="development", alias="APP_ENV")
     app_cors_origins: str = Field(default="http://localhost:5173", alias="APP_CORS_ORIGINS")
