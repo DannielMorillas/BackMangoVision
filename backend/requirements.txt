@@ -21,6 +21,14 @@ bcrypt==4.2.1
 # --- Storage (S3/MinIO, lo usaremos desde Sprint 4) ---
 minio==7.2.13
 
+# --- Imagen / Inferencia ---
+# Pillow: lectura de dimensiones y validacion de imagenes subidas (siempre requerido).
+Pillow==11.0.0
+# ultralytics (YOLOv8): SOLO necesario para inferencia con el modelo real.
+# El servicio funciona en modo stub sin esta dependencia (ver app/services/inference.py).
+# Descomentar cuando exista ml/models/*.pt e instalar en el entorno de produccion:
+# ultralytics==8.3.0
+
 # --- Tests ---
 pytest==8.3.4
 pytest-cov==6.0.0

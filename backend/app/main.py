@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.routes import admin, auth, diseases
+from app.api.routes import admin, auth, diagnosticos, diseases, images, metricas, predict
 from app.core.config import get_settings
 
 settings = get_settings()
@@ -19,6 +19,10 @@ app.add_middleware(
 app.include_router(diseases.router)
 app.include_router(auth.router)
 app.include_router(admin.router)
+app.include_router(images.router)
+app.include_router(predict.router)
+app.include_router(diagnosticos.router)
+app.include_router(metricas.router)
 
 
 @app.get("/api/health", tags=["meta"])
