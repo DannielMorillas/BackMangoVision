@@ -32,15 +32,29 @@ from __future__ import annotations
 import argparse
 import csv
 import shutil
+import sys
 from pathlib import Path
 
+# La consola de Windows (cp1252) no puede imprimir los simbolos ✓/✅ que usa este
+# script y aborta con UnicodeEncodeError. Forzamos UTF-8 en stdout cuando se pueda.
+try:
+    sys.stdout.reconfigure(encoding="utf-8")  # type: ignore[union-attr]
+except Exception:
+    pass
+
 # Graficos clave (en orden de importancia para evidencia)
+# Las versiones nuevas de Ultralytics prefijan las curvas con "Box" (BoxPR_curve.png,
+# BoxF1_curve.png, ...). Incluimos ambos nombres; solo se copia el que exista en el run.
 CORE_PLOTS = [
     "results.png",
     "PR_curve.png",
+    "BoxPR_curve.png",
     "F1_curve.png",
+    "BoxF1_curve.png",
     "P_curve.png",
+    "BoxP_curve.png",
     "R_curve.png",
+    "BoxR_curve.png",
     "confusion_matrix.png",
     "confusion_matrix_normalized.png",
     "labels.jpg",
