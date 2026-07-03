@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 8
+names: ['Anthracnose', 'Bacterial-Canker', 'Cutting-Weevil', 'Die-Back', 'Gall-Midge', 'Healthy', 'Powdery-Mildew', 'Sooty-Mould']
+
+roboflow:
+  workspace: penpixel
+  project: mango-leaf-detection-7abk6
+  version: 2
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/penpixel/mango-leaf-detection-7abk6/dataset/2
